@@ -2,76 +2,102 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat-App</title>
-  <style>
-    *{
-        background-color: black;
-        color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat-App</title>
+    <style>
+        * {
+            /* background-color: black; */
+            color: rgb(0, 0, 0);
+        }
+        #newuse{
+            background-color: aqua;
+        }
+    </style>
 </head>
 
 <body>
-  <h1>Chatting</h1>
-  <div id="val"></div>
-  <p id="nick">user-name</p>
-  <input type="text" id="message" placeholder="Enter message" />
-  <input type="text" id="name" placeholder="Enter nickname" />
+    <h1>Chatting</h1>
+    <div id="val"></div>
+    <div id="newuse"></div>
+    <p id="nick">user-name</p>
+    <h2 id="show"></h2>
+    <input type="text" id="message" placeholder="Enter message" />
+    <input type="text" id="name" placeholder="Enter nickname" />
 
-  <button id="sendbtn">Send</button>
-  <button id="sendbtn2">Send name here</button>
+    <button id="sendbtn">Send</button>
+    <button id="sendbtn2">Send name here</button>
 
-  <div id="mess"></div>
+    <div id="mess"></div>
 
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-    const sendbtn = document.getElementById("sendbtn")
-    const sendbtn2 = document.getElementById("sendbtn2")
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const sendbtn = document.getElementById("sendbtn")
+        const sendbtn2 = document.getElementById("sendbtn2")
 
-    const messageInput = document.getElementById("message")
-    const messageInput2 = document.getElementById("name")
+        const messageInput = document.getElementById("message")
+        const messageInput2 = document.getElementById("name")
 
-    const allmess = document.getElementById("mess")
-    
-    socket.on('message', message => {
-      console.log(message);
-      const p = document.createElement("p");
-      p.innerText = message[1] + ":" + message[0]
-      allmess.appendChild(p)
-    })
+        const allmess = document.getElementById("mess")
+        const usersallonline  = document.getElementById("newuse")
 
-    socket.on('nickname', nickname => {
-      document.getElementById("nick").innerHTML = nickname
-    })
 
-    socket.on("online-users", (users) => {
-      console.log(users);
-      
-      document.getElementById("val").innerHTML = users
-    });
+        socket.on('message', message => {
+            console.log(message);
+            const p = document.createElement("p");
+            p.innerText = message[1] + ":" + message[0]
+            allmess.appendChild(p)
+        })
 
-    socket.on("user-online", (userId) => {
-      document.getElementById("val").innerHTML =  `${userId || "user"} has joined chat`
-    });
+        socket.on('nickname', nickname => {
+            document.getElementById("nick").innerHTML = nickname
+        })
 
-    socket.on("user-offline", (userId) => {
-      document.getElementById("val").innerHTML = `${userId} has left chat`
-    });
+        socket.on("online-users", (users) => {
+            console.log(users);
+            users.map(data=>{
+            console.log(data);
+            if (document.getElementById("nick").innerHTML !== data.username ) {
+                const p = document.createElement("p");
+                p.innerText = data.username
+                usersallonline.appendChild(p)
+            }
+            })
+        });
 
-    sendbtn.addEventListener("click", (e) => {
-      const message = messageInput.value;
-      socket.emit("user-message", message)
-    })
+        socket.on("user-online", (userId) => {
+            document.getElementById("val").innerHTML = `${userId || "user"} has joined chat`
+        });
 
-    sendbtn2.addEventListener("click", (e) => {
-      const message2 = messageInput2.value;
-      socket.emit("user-nickname", message2)
-    })
-  </script>
+        socket.on("user-offline", (userId) => {
+            document.getElementById("val").innerHTML = `${userId} has left chat`
+        });
+
+        messageInput.addEventListener("input", (e) => {
+            socket.emit("typing", e.target.value)
+        })
+
+        sendbtn.addEventListener("click", (e) => {
+            const message = messageInput.value;
+            socket.emit("user-message", message)
+        })
+
+        sendbtn2.addEventListener("click", (e) => {
+            const message2 = messageInput2.value;
+            socket.emit("user-nickname", message2)
+        })
+
+        socket.on('user-typing', (username, space) => {
+            console.log(username, space);
+            if (space.length === 0) {
+                document.getElementById("show").innerHTML = ''
+            } else {
+                document.getElementById("show").innerHTML = `${username} ...typing`
+            }
+        })
+    </script>
 </body>
 
 </html>

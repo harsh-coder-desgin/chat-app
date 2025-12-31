@@ -2,7 +2,6 @@ const http = require("http")
 const express = require("express")
 const path = require('path')
 const { Server } = require("socket.io");
-const { log } = require("console");
 
 const app = express();
 const server = http.createServer(app)
@@ -10,26 +9,43 @@ const io = new Server(server)
 
 //socket.io
 const onlineUsers = new Set();
-const users ={}
+const users = {}
 
-io.on("connection",(socket)=>{
-    console.log(socket.id);    
+io.on("connection", (socket) => {
+
     onlineUsers.add("online");
-    
-    socket.broadcast.emit("user-online",users[socket.id])
 
-    socket.on("user-nickname",(nick)=>{
-        socket.emit("nickname",nick)
+    function findOnline(users, currentSocketId) {
+        const online = [];
+
+        for (let id in users) {
+            online.push({
+                socketId: id,
+                username: users[id],
+                isMe: id === currentSocketId
+            });
+        }
+
+        return online;
+    }
+
+    socket.on("user-nickname", (nick) => {
         users[socket.id] = nick
-        console.log(users);
-        
-    })
-    
-    socket.on("user-message",(message)=>{
-        io.emit("message",[message, users[socket.id]])
+        socket.emit("nickname", nick)
+        io.emit("online-users", findOnline(users, socket.id));
     })
 
-    socket.emit("online-users", Array.from(onlineUsers));
+
+    socket.broadcast.emit("user-online", users[socket.id])
+
+    socket.on("typing", (ans) => {
+        socket.broadcast.emit("user-typing", users[socket.id], ans);
+    })
+
+    socket.on("user-message", (message) => {
+        io.emit("message", [message, users[socket.id]])
+    })
+
 
     socket.on("disconnect", () => {
         socket.broadcast.emit("user-offline", users[socket.id]);
@@ -39,8 +55,8 @@ io.on("connection",(socket)=>{
 
 app.use(express.static(path.resolve('./public')))
 
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
     return res.sendFile('/public/index.html')
 });
 
-server.listen(9000,() => console.log(`Server was runing at 9000`))
+server.listen(9000, () => console.log(`Server was runing at 9000`))
