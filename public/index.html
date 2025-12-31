@@ -5,6 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat-App</title>
+  <style>
+    *{
+        background-color: black;
+        color: white;
+    }
+  </style>
 </head>
 
 <body>
@@ -32,8 +38,9 @@
     const allmess = document.getElementById("mess")
     
     socket.on('message', message => {
+      console.log(message);
       const p = document.createElement("p");
-      p.innerText = message
+      p.innerText = message[1] + ":" + message[0]
       allmess.appendChild(p)
     })
 
@@ -48,11 +55,11 @@
     });
 
     socket.on("user-online", (userId) => {
-      document.getElementById("val").innerHTML = userId;
+      document.getElementById("val").innerHTML =  `${userId || "user"} has joined chat`
     });
 
     socket.on("user-offline", (userId) => {
-      document.getElementById("val").innerHTML = userId;
+      document.getElementById("val").innerHTML = `${userId} has left chat`
     });
 
     sendbtn.addEventListener("click", (e) => {
