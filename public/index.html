@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat-App</title>
+</head>
+
+<body>
+  <h1>Chatting</h1>
+  <div id="val"></div>
+  <p id="nick">user-name</p>
+  <input type="text" id="message" placeholder="Enter message" />
+  <input type="text" id="name" placeholder="Enter nickname" />
+
+  <button id="sendbtn">Send</button>
+  <button id="sendbtn2">Send name here</button>
+
+  <div id="mess"></div>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const sendbtn = document.getElementById("sendbtn")
+    const sendbtn2 = document.getElementById("sendbtn2")
+
+    const messageInput = document.getElementById("message")
+    const messageInput2 = document.getElementById("name")
+
+    const allmess = document.getElementById("mess")
+    
+    socket.on('message', message => {
+      const p = document.createElement("p");
+      p.innerText = message
+      allmess.appendChild(p)
+    })
+
+    socket.on('nickname', nickname => {
+      document.getElementById("nick").innerHTML = nickname
+    })
+
+    socket.on("online-users", (users) => {
+      console.log(users);
+      
+      document.getElementById("val").innerHTML = users
+    });
+
+    socket.on("user-online", (userId) => {
+      document.getElementById("val").innerHTML = userId;
+    });
+
+    socket.on("user-offline", (userId) => {
+      document.getElementById("val").innerHTML = userId;
+    });
+
+    sendbtn.addEventListener("click", (e) => {
+      const message = messageInput.value;
+      socket.emit("user-message", message)
+    })
+
+    sendbtn2.addEventListener("click", (e) => {
+      const message2 = messageInput2.value;
+      socket.emit("user-nickname", message2)
+    })
+  </script>
+</body>
+
+</html>
