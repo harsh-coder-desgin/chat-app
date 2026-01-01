@@ -17,15 +17,13 @@ io.on("connection", (socket) => {
 
     function findOnline(users, currentSocketId) {
         const online = [];
-
         for (let id in users) {
             online.push({
                 socketId: id,
                 username: users[id],
                 isMe: id === currentSocketId
             });
-        }
-
+        }        
         return online;
     }
 
@@ -50,6 +48,7 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         socket.broadcast.emit("user-offline", users[socket.id]);
         onlineUsers.delete("online");
+        delete users[socket.id]
     });
 })
 

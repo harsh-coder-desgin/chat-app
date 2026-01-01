@@ -10,7 +10,8 @@
             /* background-color: black; */
             color: rgb(0, 0, 0);
         }
-        #newuse{
+
+        #newuse {
             background-color: aqua;
         }
     </style>
@@ -41,7 +42,7 @@
         const messageInput2 = document.getElementById("name")
 
         const allmess = document.getElementById("mess")
-        const usersallonline  = document.getElementById("newuse")
+        const usersallonline = document.getElementById("newuse")
 
 
         socket.on('message', message => {
@@ -56,14 +57,13 @@
         })
 
         socket.on("online-users", (users) => {
-            console.log(users);
-            users.map(data=>{
-            console.log(data);
-            if (document.getElementById("nick").innerHTML !== data.username ) {
-                const p = document.createElement("p");
-                p.innerText = data.username
-                usersallonline.appendChild(p)
-            }
+            const datausers = [...usersallonline.children].map(el => el.remove());
+            users.map(data => {
+                if (document.getElementById("nick").innerHTML !== data.username) {
+                    const p = document.createElement("p");
+                    p.innerText = data.username
+                    usersallonline.appendChild(p)
+                }
             })
         });
 
@@ -73,6 +73,8 @@
 
         socket.on("user-offline", (userId) => {
             document.getElementById("val").innerHTML = `${userId} has left chat`
+            const el = [...usersallonline.children].find(el => el.textContent.trim() === userId);
+            if (el) el.remove();
         });
 
         messageInput.addEventListener("input", (e) => {
