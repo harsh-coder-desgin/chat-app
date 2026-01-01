@@ -19,6 +19,7 @@
 
 <body>
     <h1>Chatting</h1>
+    <h2 id="checkerror"></h2>
     <div id="val"></div>
     <div id="newuse"></div>
     <p id="nick">user-name</p>
@@ -87,8 +88,10 @@
         })
 
         sendbtn2.addEventListener("click", (e) => {
-            const message2 = messageInput2.value;
-            socket.emit("user-nickname", message2)
+            if (document.getElementById("nick").innerHTML !==  messageInput2.value) {
+                const message2 = messageInput2.value;
+                socket.emit("user-nickname", message2)
+            }
         })
 
         socket.on('user-typing', (username, space) => {
@@ -99,6 +102,12 @@
                 document.getElementById("show").innerHTML = `${username} ...typing`
             }
         })
+
+        socket.on('error',(err)=>{
+            console.log(err);
+            document.getElementById("checkerror").innerHTML = err
+        })
+
     </script>
 </body>
 

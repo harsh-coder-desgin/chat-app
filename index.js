@@ -28,8 +28,19 @@ io.on("connection", (socket) => {
     }
 
     socket.on("user-nickname", (nick) => {
-        users[socket.id] = nick
-        socket.emit("nickname", nick)
+        const namenick = nick.replace(/\s+/g, " ");
+        let samename = false
+        for (const property in users) {
+            if (users[property] === namenick.trim()) {
+                samename = true
+            }
+        }
+        if (samename) {
+            socket.emit("error","username already exits")
+        } else {
+            users[socket.id] = namenick
+            socket.emit("nickname",namenick)
+        }
         io.emit("online-users", findOnline(users, socket.id));
     })
 
