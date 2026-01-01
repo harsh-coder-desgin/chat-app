@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat-App</title>
     <style>
-        * {
-            /* background-color: black; */
-            color: rgb(0, 0, 0);
-        }
-
         #newuse {
             background-color: aqua;
+        }
+        #chatroom{
+            background-color: blueviolet;
+            color: white;
         }
     </style>
 </head>
@@ -26,7 +25,16 @@
     <h2 id="show"></h2>
     <input type="text" id="message" placeholder="Enter message" />
     <input type="text" id="name" placeholder="Enter nickname" />
+    <div id="chatroom">
+        <button id="private">Room Join</button>
+        <h3 id="roomname"></h3>
+        <p id="roomhello"></p>
+        <input type="text" id="joinedperson" placeholder="Enter private room message" />
+        <button id="btnmessroom">Send message in room</button>
+        <div id="messageprivate">
 
+        </div>
+    </div>
     <button id="sendbtn">Send</button>
     <button id="sendbtn2">Send name here</button>
 
@@ -38,16 +46,18 @@
         const socket = io();
         const sendbtn = document.getElementById("sendbtn")
         const sendbtn2 = document.getElementById("sendbtn2")
+        const room_btn = document.getElementById("private")
+        const btn_mess_room = document.getElementById("btnmessroom")
 
         const messageInput = document.getElementById("message")
         const messageInput2 = document.getElementById("name")
+        const privatemessageinput = document.getElementById("joinedperson")
 
         const allmess = document.getElementById("mess")
         const usersallonline = document.getElementById("newuse")
-
+        const privetmessageappend = document.getElementById("messageprivate")
 
         socket.on('message', message => {
-            console.log(message);
             const p = document.createElement("p");
             p.innerText = message[1] + ":" + message[0]
             allmess.appendChild(p)
@@ -95,7 +105,6 @@
         })
 
         socket.on('user-typing', (username, space) => {
-            console.log(username, space);
             if (space.length === 0) {
                 document.getElementById("show").innerHTML = ''
             } else {
@@ -104,10 +113,31 @@
         })
 
         socket.on('error',(err)=>{
-            console.log(err);
             document.getElementById("checkerror").innerHTML = err
         })
 
+        room_btn.addEventListener("click", (e) => {
+            socket.emit("join-room", "room1");
+        })
+
+        socket.on('joined-room',(name)=>{
+            document.getElementById("roomname").innerHTML = name
+        })
+
+        socket.on('room-mess',(name)=>{
+            document.getElementById("roomhello").innerHTML = name
+        })
+
+        btn_mess_room.addEventListener("click", (e) => {
+            const roommessage = privatemessageinput.value;
+            socket.emit("message-room",  roommessage);
+        })
+
+        socket.on('private-mess',(name)=>{
+            const p = document.createElement("p");
+            p.innerText = name[1] + ":" + name[0]
+            privetmessageappend.appendChild(p)
+        })
     </script>
 </body>
 

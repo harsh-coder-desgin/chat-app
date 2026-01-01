@@ -10,6 +10,7 @@ const io = new Server(server)
 //socket.io
 const onlineUsers = new Set();
 const users = {}
+const privateroom ={}
 
 io.on("connection", (socket) => {
 
@@ -23,7 +24,7 @@ io.on("connection", (socket) => {
                 username: users[id],
                 isMe: id === currentSocketId
             });
-        }        
+        }
         return online;
     }
 
@@ -36,14 +37,13 @@ io.on("connection", (socket) => {
             }
         }
         if (samename) {
-            socket.emit("error","username already exits")
+            socket.emit("error", "username already exits")
         } else {
             users[socket.id] = namenick
-            socket.emit("nickname",namenick)
+            socket.emit("nickname", namenick)
         }
         io.emit("online-users", findOnline(users, socket.id));
     })
-
 
     socket.broadcast.emit("user-online", users[socket.id])
 
@@ -55,6 +55,15 @@ io.on("connection", (socket) => {
         io.emit("message", [message, users[socket.id]])
     })
 
+    socket.on("join-room", (roomName) => {
+        socket.join(roomName)
+        privateroom[socket.id] = users[socket.id]
+        socket.emit("joined-room", roomName);
+        io.to(roomName).emit("room-mess", "Hello room1 users");
+        socket.on("message-room", (message) => {
+            io.to(roomName).emit("private-mess", [message, privateroom[socket.id]]);
+        })
+    });
 
     socket.on("disconnect", () => {
         socket.broadcast.emit("user-offline", users[socket.id]);
