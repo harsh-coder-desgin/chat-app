@@ -1,18 +1,18 @@
-# 💬 Simple Chat App
+# Simple Chat App
 
-## 📌 Summary
+## Summary
 A simple real-time chat application built using Socket.IO where users can join, create rooms, and communicate instantly with other users in the same room.
 
 ---
 
-## 📖 Description
+## Description
 This project demonstrates real-time communication on the web using Socket.IO.  
 Users can enter a nickname, join a global chat or a specific room, and send messages that are visible only to users who joined the same room.  
 The app focuses on simplicity while covering core real-time chat concepts.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 - HTML
 - CSS
 - JavaScript
@@ -22,7 +22,7 @@ The app focuses on simplicity while covering core real-time chat concepts.
 
 ---
 
-## 🔌 Socket.IO
+## Socket.IO
 - Real-time message sending and receiving  
 - Handle user connect and disconnect  
 - Room-based messaging using `socket.join()`  
@@ -30,7 +30,7 @@ The app focuses on simplicity while covering core real-time chat concepts.
 
 ---
 
-## ✨ Features
+## Features
 - Enter nickname before joining chat  
 - Global chat support  
 - Simple room-based chat  
@@ -42,7 +42,7 @@ The app focuses on simplicity while covering core real-time chat concepts.
 
 ---
 
-## 🚀 Future Work
+## Future Work
 - Private room passwords  
 - Online / offline user list per room  
 - Message timestamps  
@@ -51,5 +51,5 @@ The app focuses on simplicity while covering core real-time chat concepts.
 
 ---
 
-## 👤 Author
+## Author
 Harsh Patel
