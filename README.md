@@ -1,18 +1,18 @@
-# Simple Chat App
+# 💬 Simple Chat App
 
-## Summary
-A simple real-time chat application built using Socket.IO where users can join, send messages, and communicate instantly in a shared chat environment.
+## 📌 Summary
+A simple real-time chat application built using Socket.IO where users can join, create rooms, and communicate instantly with other users in the same room.
 
 ---
 
-## Description
+## 📖 Description
 This project demonstrates real-time communication on the web using Socket.IO.  
-Users can enter a nickname, join the chat, and send messages that appear instantly for all connected users.  
-The app focuses on simplicity and core real-time concepts.
+Users can enter a nickname, join a global chat or a specific room, and send messages that are visible only to users who joined the same room.  
+The app focuses on simplicity while covering core real-time chat concepts.
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 - HTML
 - CSS
 - JavaScript
@@ -22,29 +22,34 @@ The app focuses on simplicity and core real-time concepts.
 
 ---
 
-## Socket.IO
-- Real-time message sending and receiving
-- Handle user connect and disconnect
-- Broadcast messages to all users
+## 🔌 Socket.IO
+- Real-time message sending and receiving  
+- Handle user connect and disconnect  
+- Room-based messaging using `socket.join()`  
+- Broadcast messages to specific rooms  
 
 ---
 
-## Features
-- Enter nickname before joining chat
-- Real-time global chat
-- Simple and clean UI
-- No page reload needed
+## ✨ Features
+- Enter nickname before joining chat  
+- Global chat support  
+- Simple room-based chat  
+- Messages visible only to users in the same room  
+- Real-time communication  
+- Simple and clean UI  
+- Typing indicator  
+- No page reload needed  
 
 ---
 
-## Future Work
-- Private chat rooms
-- Online / offline user list
-- Message timestamps
-- Typing indicator
-- Improved UI/UX
+## 🚀 Future Work
+- Private room passwords  
+- Online / offline user list per room  
+- Message timestamps  
+- File sharing  
+- Improved UI/UX  
 
 ---
 
-## Author
+## 👤 Author
 Harsh Patel
