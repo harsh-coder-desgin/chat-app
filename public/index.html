@@ -6,40 +6,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat-App</title>
     <style>
+        *{
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+        }
         #newuse {
             background-color: aqua;
         }
         #chatroom{
             background-color: blueviolet;
-            color: white;
+            color: rgb(0, 0, 0);
         }
+        #heading{
+            color: #000000;
+            text-align: center;
+            padding: 12px;
+        }
+        #message{
+            width: 580px;
+            height: 50px;
+            font-size: 20px;
+            background-color: rgb(213, 213, 213);
+            color: black;
+        }
+        #sendbtn{
+            background-color: blueviolet;
+            color: white;
+            width: 80px;
+            height: 55px;
+            font-size: 20px;
+
+        }
+        /* #popup{
+
+        }
+        #allconetntmessage{
+            display: none;
+        }
+        #name{
+
+        } */
+        
     </style>
 </head>
 
 <body>
-    <h1>Chatting</h1>
-    <h2 id="checkerror"></h2>
-    <div id="val"></div>
-    <div id="newuse"></div>
-    <p id="nick">user-name</p>
-    <h2 id="show"></h2>
-    <input type="text" id="message" placeholder="Enter message" />
-    <input type="text" id="name" placeholder="Enter nickname" />
-    <div id="chatroom">
-        <button id="private">Room Join</button>
-        <h3 id="roomname"></h3>
-        <p id="roomhello"></p>
-        <input type="text" id="joinedperson" placeholder="Enter private room message" />
-        <button id="btnmessroom">Send message in room</button>
-        <div id="messageprivate">
-
-        </div>
+    <div id="popup">
+        <input type="text" id="name" placeholder="Enter nickname" />
+        <button id="sendbtn2">Send name here</button>
     </div>
-    <button id="sendbtn">Send</button>
-    <button id="sendbtn2">Send name here</button>
-
-    <div id="mess"></div>
-
+    <div id="allconetntmessage">
+        <h1 id="heading">Chatting App</h1>
+        <h2 id="checkerror"></h2>
+        <div id="val"></div>
+        <div id="newuse"></div>
+        <p id="nick">user-name</p>
+        <h2 id="show"></h2>
+        <div id="chatroom">
+            <button id="private">Room Join</button>
+            <h3 id="roomname"></h3>
+            <p id="roomhello"></p>
+            <input type="text" id="joinedperson" placeholder="Enter private room message" />
+            <button id="btnmessroom">Send message in room</button>
+            <div id="messageprivate">  
+            </div>
+        </div>
+        <div id="divsendmess">
+            <input type="text" id="message" placeholder="Enter message" />
+            <button id="sendbtn">Send</button>
+        </div>
+        
+        <div id="mess"></div>
+    </div>
+    
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -101,6 +140,8 @@
             if (document.getElementById("nick").innerHTML !==  messageInput2.value) {
                 const message2 = messageInput2.value;
                 socket.emit("user-nickname", message2)
+                document.getElementById("allconetntmessage").style.display = "block";
+                document.getElementById("popup").style.display = "none";
             }
         })
 
