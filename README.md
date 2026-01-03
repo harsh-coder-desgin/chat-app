@@ -43,7 +43,7 @@ The app focuses on simplicity while covering core real-time chat concepts.
 ---
 
 ## Screenshot
-<img width="1918" height="902" alt="Screenshot 2026-01-03 170752" src="Screenshot 2026-01-03 170752.png" />
+<img width="1918" height="907" alt="Screenshot 2026-01-03 170752" src="https://github.com/user-attachments/assets/939160e6-458e-4dcb-b1e4-85dab4c8e6b7" />
 
 ---
 
