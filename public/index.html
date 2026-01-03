@@ -6,79 +6,209 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat-App</title>
     <style>
-        *{
+        
+        * {
             background-color: rgb(255, 255, 255);
             color: rgb(0, 0, 0);
+            font-family: Arial, Helvetica, sans-serif;
         }
-        #newuse {
-            background-color: aqua;
-        }
-        #chatroom{
-            background-color: blueviolet;
-            color: rgb(0, 0, 0);
-        }
-        #heading{
-            color: #000000;
+
+        #heading {
+            color: #1e3a8a;
             text-align: center;
             padding: 12px;
+            font-size: 36px;
+            font-weight: bold;
         }
-        #message{
-            width: 580px;
-            height: 50px;
+
+        #newuse {
+            color: #0369a1;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            gap: 10px;
             font-size: 20px;
-            background-color: rgb(213, 213, 213);
+        }
+
+        #chatroom {
+            color: #000;
+            margin-top: 40px;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        #message {
+            width: 399px;
+            height: 40px;
+            font-size: 16px;
             color: black;
+            border: 2px solid #c7d2fe;
+            border-radius: 8px;
+            padding-left: 10px;
+            outline: none;
         }
-        #sendbtn{
-            background-color: blueviolet;
+
+        #sendbtn {
+            background-color: #2563eb;
             color: white;
-            width: 80px;
-            height: 55px;
-            font-size: 20px;
-
+            width: 74px;
+            height: 47px;
+            font-size: 17px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
         }
-        /* #popup{
 
+        #sendbtn:hover {
+            background-color: #1d4ed8;
         }
-        #allconetntmessage{
+
+        #popup {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 300px;
+        }
+
+        #allconetntmessage {
             display: none;
         }
-        #name{
 
-        } */
-        
+        #name {
+            border: 2px solid #93c5fd;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        #val {
+            text-align: center;
+            color: #2563eb;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        #nick {
+            text-align: left;
+            color: #1e40af;
+            font-weight: bold;
+            margin-left: 515px;
+            margin-top: 40px;
+        }
+
+        #showonlynames {
+            display: grid;
+            grid-auto-flow: row;
+            justify-items: end;
+            gap: 8px;
+        }
+
+        #showonlynames div {
+            display: flex;
+            color: #1e3a8a;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        #show,
+        #divsendmess,
+        #mess {
+            text-align: center;
+        }
+
+        #mess {
+            margin-right: 40px;
+            padding: 8px;
+            border-radius: 8px;
+            color: #111827;
+        }
+
+        #joinedperson {
+            width: 391px;
+            height: 50px;
+            font-size: 16px;
+            color: black;
+            border: 2px solid #c7d2fe;
+            border-radius: 8px;
+            padding-left: 10px;
+        }
+
+        #private {
+            background-color: #2563eb;
+            color:white;
+            width: 134px;
+            height: 50px;
+            font-size: 17px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #btnmessroom{
+            background-color: #1d4ed8;
+            margin-top: 12px;
+            color:white;
+            width: 198px;
+            height: 50px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #messageprivate{
+            text-align: center;
+        }
+
+        #sendbtn2{
+            background-color: #1d4ed8;
+            margin-top: 12px;
+            color:white;
+            width: 198px;
+            height: 50px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
-
 <body>
     <div id="popup">
         <input type="text" id="name" placeholder="Enter nickname" />
         <button id="sendbtn2">Send name here</button>
+        <h2 id="checkerror"></h2>
     </div>
     <div id="allconetntmessage">
         <h1 id="heading">Chatting App</h1>
-        <h2 id="checkerror"></h2>
         <div id="val"></div>
-        <div id="newuse"></div>
+        <div id="showonlynames">
+            <div id="newuse"></div>
+        </div>
         <p id="nick">user-name</p>
         <h2 id="show"></h2>
-        <div id="chatroom">
-            <button id="private">Room Join</button>
-            <h3 id="roomname"></h3>
-            <p id="roomhello"></p>
-            <input type="text" id="joinedperson" placeholder="Enter private room message" />
-            <button id="btnmessroom">Send message in room</button>
-            <div id="messageprivate">  
-            </div>
-        </div>
+        <div id="mess"></div>
         <div id="divsendmess">
             <input type="text" id="message" placeholder="Enter message" />
             <button id="sendbtn">Send</button>
         </div>
-        
-        <div id="mess"></div>
+
+        <div id="chatroom">
+            <div style="text-align: center;">
+                <button id="private">Room Join</button>
+            </div>
+            <h3 id="roomname" style="text-align: center;"></h3>
+            <p id="roomhello" style="text-align: center;"></p>
+            <div style="text-align: center;">
+                <input type="text" id="joinedperson" placeholder="Enter private room message" />
+                <button id="btnmessroom">Send message in room</button>
+            </div>
+            <div id="messageprivate">
+            </div>
+        </div>
     </div>
-    
+
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -97,7 +227,7 @@
         const privetmessageappend = document.getElementById("messageprivate")
 
         socket.on('message', message => {
-            const p = document.createElement("p");
+            const p = document.createElement("p")
             p.innerText = message[1] + ":" + message[0]
             allmess.appendChild(p)
         })
@@ -110,7 +240,10 @@
             const datausers = [...usersallonline.children].map(el => el.remove());
             users.map(data => {
                 if (document.getElementById("nick").innerHTML !== data.username) {
-                    const p = document.createElement("p");
+                    const p = document.createElement("p")
+                    p.style.margin = "margin-left: 8px;"
+                    p.style.margin = "margin-top: -8px;"
+                    p.style.color = "color: green"
                     p.innerText = data.username
                     usersallonline.appendChild(p)
                 }
@@ -131,18 +264,19 @@
             socket.emit("typing", e.target.value)
         })
 
+        messageInput2.addEventListener("input", (e) => {
+            document.getElementById("checkerror").innerHTML = ''
+            socket.emit("user-nickname", e.target.value)
+        })
+
         sendbtn.addEventListener("click", (e) => {
             const message = messageInput.value;
             socket.emit("user-message", message)
         })
 
         sendbtn2.addEventListener("click", (e) => {
-            if (document.getElementById("nick").innerHTML !==  messageInput2.value) {
-                const message2 = messageInput2.value;
-                socket.emit("user-nickname", message2)
-                document.getElementById("allconetntmessage").style.display = "block";
-                document.getElementById("popup").style.display = "none";
-            }
+            document.getElementById("allconetntmessage").style.display = "block";
+            document.getElementById("popup").style.display = "none";
         })
 
         socket.on('user-typing', (username, space) => {
@@ -153,7 +287,7 @@
             }
         })
 
-        socket.on('error',(err)=>{
+        socket.on('error', (err) => {
             document.getElementById("checkerror").innerHTML = err
         })
 
@@ -161,20 +295,20 @@
             socket.emit("join-room", "room1");
         })
 
-        socket.on('joined-room',(name)=>{
+        socket.on('joined-room', (name) => {
             document.getElementById("roomname").innerHTML = name
         })
 
-        socket.on('room-mess',(name)=>{
+        socket.on('room-mess', (name) => {
             document.getElementById("roomhello").innerHTML = name
         })
 
         btn_mess_room.addEventListener("click", (e) => {
             const roommessage = privatemessageinput.value;
-            socket.emit("message-room",  roommessage);
+            socket.emit("message-room", roommessage);
         })
 
-        socket.on('private-mess',(name)=>{
+        socket.on('private-mess', (name) => {
             const p = document.createElement("p");
             p.innerText = name[1] + ":" + name[0]
             privetmessageappend.appendChild(p)
