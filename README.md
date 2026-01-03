@@ -51,7 +51,6 @@ The app focuses on simplicity while covering core real-time chat concepts.
 - Private room passwords  
 - Online / offline user list per room  
 - Message timestamps  
-- File sharing  
 - Improved UI/UX  
 
 ---
