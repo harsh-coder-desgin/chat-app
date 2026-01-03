@@ -42,6 +42,11 @@ The app focuses on simplicity while covering core real-time chat concepts.
 
 ---
 
+## Screenshot
+<img width="1918" height="902" alt="Screenshot 2026-01-03 170752" src="Screenshot 2026-01-03 170752.png" />
+
+---
+
 ## Future Work
 - Private room passwords  
 - Online / offline user list per room  
